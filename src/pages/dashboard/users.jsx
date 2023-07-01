@@ -58,7 +58,6 @@ export function Users() {
         console.error("Error fetching users data:", error);
       });
   }, [isDeleted]);
-  console.log(usersData);
   const showConfirmationPrompt = () => {
     return new Promise((resolve) => {
       Swal.fire({

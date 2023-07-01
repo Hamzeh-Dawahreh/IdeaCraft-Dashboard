@@ -3,49 +3,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export function Home() {
-  const [pitches, setPitches] = useState([]);
-
+  const [statistics, setStatistics] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:8181/getpitchwithuser")
+      .get("http://localhost:3500/users/getAllCollectionsCounts")
       .then((response) => {
-        const fetchedPitches = response.data;
-        const sortedPitches = fetchedPitches.sort((a, b) => a.id - b.id);
-        setPitches(sortedPitches);
+        setStatistics(response.data);
       })
       .catch((error) => {
         console.error("Error retrieving data:", error);
       });
   }, []);
-  console.log(pitches);
-  const [usersData, setUsersData] = useState([]);
-
   // Fetch users data from the server
-  useEffect(() => {
-    axios
-      .get("http://localhost:8181/usersData")
-      .then((response) => {
-        setUsersData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error retrieving data:", error);
-      });
-  }, []);
-  console.log(usersData);
-
-  const [bookings, setbookings] = useState([]);
-  useEffect(() => {
-    axios;
-    axios
-      .get("http://localhost:8181/bookings")
-      .then((response) => {
-        setbookings(response.data.rows);
-      })
-      .catch((error) => {
-        console.error("Error retrieving data:", error);
-      });
-  }, []);
-  console.log(bookings);
   return (
     <>
       <div className="m-10 mx-auto grid max-w-screen-lg  gap-5 sm:grid-cols-3">
@@ -69,7 +38,7 @@ export function Home() {
             >
               <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
-            {usersData.length}
+            {statistics.users}
           </p>
           <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
             <Link to={"/dashboard/Users"}>More info</Link>
@@ -121,7 +90,7 @@ export function Home() {
             >
               <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
-            {pitches.length}
+            {statistics.companies}
           </p>
           <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
             <Link to={"/dashboard/pitches"}>More info</Link>
@@ -149,7 +118,7 @@ export function Home() {
             >
               <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
-            {bookings.length}
+            {statistics.services}
           </p>
           <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
             <Link to={"/dashboard/booking"}>More info</Link>

@@ -35,7 +35,6 @@ export function Companies() {
         console.error("Error fetching users data:", error);
       });
   }, [isDeleted]);
-  console.log(companiesData);
   const handleDelete = async (company_id) => {
     const confirmed = await showConfirmationPrompt();
     const token = localStorage.getItem("token");

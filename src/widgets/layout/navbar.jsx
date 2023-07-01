@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar as MTNavbar,
   MobileNav,
@@ -12,7 +12,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export function Navbar({ brandName, routes, action }) {
   const [openNav, setOpenNav] = React.useState(false);
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     window.addEventListener(
       "resize",

@@ -22,7 +22,9 @@ import Swal from "sweetalert2";
 export function Services() {
   const [services, setServices] = useState([]);
   const [isDeleted, setIsDeleted] = useState(true);
-  const [open, setOpen] = useState();
+  const [isApproveD, setIsApproved] = useState(true);
+  const [open, setOpen] = useState(false);
+
   const handleDelete = async (service_id) => {
     const confirmed = await showConfirmationPrompt();
     const token = localStorage.getItem("token");
@@ -49,29 +51,38 @@ export function Services() {
     }
   };
   const handleApprove = async (service_id) => {
-    const confirmed = showApprovePrompt();
+    const confirmed = await showApprovePrompt();
     const token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-    const isDeleted = true;
+    let isApproved;
 
-    if (confirmed) {
-      try {
-        const response = await axios.put(
-          `http://localhost:3500/form/deleteService/${service_id}`,
-          { isDeleted },
-          config
-        );
-        Swal.fire("Done!", `${response.data}`, "success");
-
-        setIsDeleted(!isDeleted);
-      } catch (error) {
-        console.error(error);
-      }
+    if (confirmed == true) {
+      isApproved = true; // Set isApproved to true if confirmed is true
+    } else if (confirmed == false) {
+      isApproved = false;
     }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:3500/form/approveService/${service_id}`,
+        { isApproved },
+        config
+      );
+      response.data.message
+        ? Swal.fire(
+            "Something went wrong!",
+            `${response.data.message}`,
+            "error"
+          )
+        : Swal.fire("Done!", `${response.data}`, "success");
+    } catch (error) {
+      console.error(error);
+    }
+    setIsApproved(!isApproveD);
   };
   const handleOpen = () => {
     setOpen(!open);
@@ -91,21 +102,20 @@ export function Services() {
       });
     });
   };
-  const showApprovePrompt = () => {
-    Swal.fire({
+  const showApprovePrompt = async () => {
+    const result = await Swal.fire({
       title: "Do You want to Approve this Service?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Approve",
       denyButtonText: `Don't Approve`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("Changes are not saved", "", "info");
-      }
     });
+
+    if (result.isConfirmed) {
+      return true;
+    } else if (result.isDenied) {
+      return false;
+    }
   };
 
   useEffect(() => {
@@ -130,7 +140,7 @@ export function Services() {
     };
 
     fetchData();
-  }, [isDeleted]);
+  }, [isDeleted, isApproveD]);
   console.log(services);
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12 ">
@@ -161,7 +171,8 @@ export function Services() {
                   "City",
                   "Image ",
                   "Status ",
-                  "Action",
+                  "Approval",
+                  "Delete",
                 ].map((el) => (
                   <th
                     key={el}
@@ -249,9 +260,9 @@ export function Services() {
                           {
                             (isApproved = ""
                               ? "pending"
-                              : (isApproved = false
-                                  ? "Not Approved"
-                                  : "Approved"))
+                              : !isApproved
+                              ? "Not Approved"
+                              : "Approved")
                           }
                         </Typography>
                       </td>
@@ -267,6 +278,10 @@ export function Services() {
                               <i className="fa-regular fa-pen-to-square"></i>
                             </IconButton>
                           </div>
+                        </div>
+                      </td>
+                      <td className={className}>
+                        <div className="grid grid-cols-2 justify-center ">
                           <div className="justify-center">
                             <IconButton
                               color="red"

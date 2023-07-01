@@ -1,10 +1,7 @@
 import {
   HomeIcon,
-  UserCircleIcon,
   TableCellsIcon,
-  BellIcon,
   ArrowRightOnRectangleIcon,
-  UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Users } from "@/pages/dashboard";
 import { SignIn } from "@/pages/auth";
@@ -47,13 +44,13 @@ export const routes = [
       },
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "Contact Us",
+        name: "Contact us",
         path: "/ContactUs",
         element: <ContactUs />,
       },
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "AboutUs",
+        name: "About us",
         path: "/AboutUs",
         element: <AboutUs />,
       },
