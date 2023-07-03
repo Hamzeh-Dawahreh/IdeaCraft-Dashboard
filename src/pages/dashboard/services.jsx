@@ -16,7 +16,7 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
-
+import Description from "./description";
 import Swal from "sweetalert2";
 
 export function Services() {
@@ -167,6 +167,7 @@ export function Services() {
                   "company name",
                   "industry",
                   " phone",
+                  " details",
                   "Country",
                   "City",
                   "Image ",
@@ -191,7 +192,16 @@ export function Services() {
             <tbody>
               {services.map(
                 (
-                  { _id, company_id, country, city, phone, Images, isApproved },
+                  {
+                    _id,
+                    company_id,
+                    country,
+                    city,
+                    phone,
+                    description,
+                    Images,
+                    isApproved,
+                  },
                   key
                 ) => {
                   const className = `py-3 px-5 ${
@@ -222,8 +232,11 @@ export function Services() {
                         </Typography>
                       </td>
                       <td className={className}>
+                        {<Description description={description} />}{" "}
+                      </td>
+
+                      <td className={className}>
                         <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {" "}
                           {country}
                         </Typography>
                       </td>

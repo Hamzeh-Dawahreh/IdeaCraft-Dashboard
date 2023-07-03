@@ -32,13 +32,6 @@ export function DashboardNavbar() {
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
-  const navigate = useNavigate();
-
-  const token = localStorage.getItem("token");
-  const handleLogout = () => {
-    localStorage.clear(); // Clear local storage
-    navigate("/sign-in"); // Navigate to sign-in page
-  };
 
   return (
     <>
@@ -94,16 +87,6 @@ export function DashboardNavbar() {
                 className="h-6 w-6 text-blue-gray-500"
               />
             </IconButton>{" "}
-            {token && (
-              <Button
-                color="white"
-                size="sm"
-                className="hidden lg:inline-block"
-                onClick={handleLogout}
-              >
-                Logout
-              </Button>
-            )}
             <IconButton
               variant="text"
               color="blue-gray"

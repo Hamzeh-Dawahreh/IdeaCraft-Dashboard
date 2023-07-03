@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   Avatar,
@@ -12,6 +12,13 @@ import { useMaterialTailwindController, setOpenSidenav } from "@/context";
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+  const handleLogout = () => {
+    localStorage.clear(); // Clear local storage
+    navigate("/sign-in"); // Navigate to sign-in page
+  };
 
   const sidenavTypes = {
     dark: "bg-gradient-to-br from-blue-gray-800 to-blue-gray-900",
@@ -92,13 +99,41 @@ export function Sidenav({ brandImg, brandName, routes }) {
               ))}
             </ul>
           ))}
+        {token && (
+          <div
+            className=" ml-3 mt-5 flex cursor-pointer gap-2 text-white"
+            onClick={handleLogout}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+
+            <div
+              color="white"
+              size="sm"
+              className="hidden cursor-pointer text-white lg:inline-block"
+            >
+              Logout
+            </div>
+          </div>
+        )}{" "}
       </div>
     </aside>
   );
 }
 
 Sidenav.defaultProps = {
-  // brandImg: "/img/logo-ct.png",
   brandName: "IdeaCraft",
 };
 
