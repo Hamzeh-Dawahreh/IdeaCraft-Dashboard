@@ -270,13 +270,11 @@ export function Services() {
                       </td>
                       <td className={className}>
                         <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {
-                            (isApproved = ""
-                              ? "pending"
-                              : !isApproved
-                              ? "Not Approved"
-                              : "Approved")
-                          }
+                          {isApproved == undefined
+                            ? "pending"
+                            : !isApproved
+                            ? "Not Approved"
+                            : "Approved"}
                         </Typography>
                       </td>
 

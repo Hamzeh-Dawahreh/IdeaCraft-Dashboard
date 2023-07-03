@@ -40,10 +40,10 @@ export function SignIn() {
   };
   return (
     <>
-      {/* <img
-        src="https://images.pexels.com/photos/2680270/pexels-photo-2680270.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      <img
+        src="../../public/img/bg.jpg"
         className="absolute inset-0 z-0 h-full w-full object-cover"
-      /> */}
+      />
       <div className="absolute inset-0 z-0 h-full w-full bg-black/50" />
       <div className="container mx-auto p-4">
         <Card className="absolute top-2/4 left-2/4 w-full max-w-[24rem] -translate-y-2/4 -translate-x-2/4">
