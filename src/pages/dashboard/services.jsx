@@ -18,9 +18,14 @@ import {
 } from "@material-tailwind/react";
 import Description from "./description";
 import Swal from "sweetalert2";
+import { data } from "autoprefixer";
 
 export function Services() {
   const [services, setServices] = useState([]);
+  const [openArray, setOpenArray] = useState(
+    new Array(services.length).fill(false)
+  );
+
   const [isDeleted, setIsDeleted] = useState(true);
   const [isApproveD, setIsApproved] = useState(true);
   const [open, setOpen] = useState(false);
@@ -84,8 +89,10 @@ export function Services() {
     }
     setIsApproved(!isApproveD);
   };
-  const handleOpen = () => {
-    setOpen(!open);
+  const handleOpen = (index) => {
+    const updatedOpenArray = [...openArray];
+    updatedOpenArray[index] = !updatedOpenArray[index];
+    setOpenArray(updatedOpenArray);
   };
 
   const showConfirmationPrompt = () => {
@@ -190,125 +197,117 @@ export function Services() {
               </tr>
             </thead>
             <tbody>
-              {services.map(
-                (
-                  {
-                    _id,
-                    company_id,
-                    country,
-                    city,
-                    phone,
-                    description,
-                    Images,
-                    isApproved,
-                  },
-                  key
-                ) => {
-                  const className = `py-3 px-5 ${
-                    key === services.length - 1
-                      ? ""
-                      : "border-b border-blue-gray-50"
-                  }`;
+              {services.map((data, index) => {
+                const className = `py-3 px-5 ${
+                  index === services.length - 1
+                    ? ""
+                    : "border-b border-blue-gray-50"
+                }`;
 
-                  return (
-                    <tr key={_id}>
-                      <td className={className}>
-                        <div className="flex items-center gap-4">
-                          <div>
-                            <Typography className="text-xs font-normal text-blue-gray-500">
-                              {company_id.companyname}
-                            </Typography>
-                          </div>
+                return (
+                  <tr key={data._id}>
+                    <td className={className}>
+                      <div className="flex items-center gap-4">
+                        <div>
+                          <Typography className="text-xs font-normal text-blue-gray-500">
+                            {data.company_id.companyname}
+                          </Typography>
                         </div>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {company_id.industry}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {phone}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        {<Description description={description} />}{" "}
-                      </td>
+                      </div>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {data.company_id.industry}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {data.phone}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      {<Description description={data.description} />}{" "}
+                    </td>
 
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {country}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {" "}
-                          {city}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {" "}
-                          <Button
-                            onClick={handleOpen}
-                            className=" w-20 text-center text-xs"
-                          >
-                            image{" "}
-                          </Button>
-                          <Dialog open={open} handler={handleOpen}>
-                            <div className="flex items-center justify-between"></div>
-                            <DialogBody divider>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {data.country}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {" "}
+                        {data.city}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {" "}
+                        <Button
+                          onClick={() => handleOpen(index)}
+                          className=" w-20 text-center text-xs"
+                        >
+                          image{" "}
+                        </Button>{" "}
+                        <Dialog
+                          open={openArray[index]}
+                          handler={() => handleOpen(index)}
+                        >
+                          <div className="flex items-center justify-between"></div>
+                          <DialogBody divider>
+                            {" "}
+                            {data.Images.map((image, index) => (
                               <img
-                                src={`http://localhost:3500/${Images}`}
+                                key={index}
+                                src={`http://localhost:3500/${image}`}
                                 alt="image"
-                                handleImageClick
-                                className=" w-full"
+                                className="w-full"
                               />
-                            </DialogBody>
-                          </Dialog>
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {isApproved == undefined
-                            ? "pending"
-                            : !isApproved
-                            ? "Not Approved"
-                            : "Approved"}
-                        </Typography>
-                      </td>
+                            ))}
+                          </DialogBody>
+                        </Dialog>
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {data.isApproved == undefined
+                          ? "pending"
+                          : !data.isApproved
+                          ? "Not Approved"
+                          : "Approved"}
+                      </Typography>
+                    </td>
 
-                      <td className={className}>
-                        <div className="grid grid-cols-2 justify-center ">
-                          <div className="justify-center">
-                            <IconButton
-                              className=""
-                              color="green"
-                              onClick={() => handleApprove(_id)}
-                            >
-                              <i className="fa-regular fa-pen-to-square"></i>
-                            </IconButton>
-                          </div>
+                    <td className={className}>
+                      <div className="grid grid-cols-2 justify-center ">
+                        <div className="justify-center">
+                          <IconButton
+                            className=""
+                            color="green"
+                            onClick={() => handleApprove(data._id)}
+                          >
+                            <i className="fa-regular fa-pen-to-square"></i>
+                          </IconButton>
                         </div>
-                      </td>
-                      <td className={className}>
-                        <div className="grid grid-cols-2 justify-center ">
-                          <div className="justify-center">
-                            <IconButton
-                              color="red"
-                              onClick={() => {
-                                handleDelete(_id);
-                              }}
-                            >
-                              <i className="fa-solid fa-trash"></i>
-                            </IconButton>
-                          </div>
+                      </div>
+                    </td>
+                    <td className={className}>
+                      <div className="grid grid-cols-2 justify-center ">
+                        <div className="justify-center">
+                          <IconButton
+                            color="red"
+                            onClick={() => {
+                              handleDelete(data._id);
+                            }}
+                          >
+                            <i className="fa-solid fa-trash"></i>
+                          </IconButton>
                         </div>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </CardBody>

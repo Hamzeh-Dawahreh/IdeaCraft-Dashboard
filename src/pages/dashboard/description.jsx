@@ -1,19 +1,5 @@
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-  Input,
-  Textarea,
-} from "@material-tailwind/react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import { Button, Dialog, DialogBody } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import { useState } from "react";
 
 export default function description({ description }) {
