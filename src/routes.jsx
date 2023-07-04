@@ -8,7 +8,6 @@ import { SignIn } from "@/pages/auth";
 import Companies from "./pages/dashboard/companies";
 import Services from "./pages/dashboard/services";
 import ContactUs from "./pages/dashboard/ContactUs";
-import AboutUs from "./pages/dashboard/AboutUs";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -46,12 +45,6 @@ export const routes = [
         name: "Contact Us",
         path: "/ContactUs",
         element: <ContactUs />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "About Us",
-        path: "/AboutUs",
-        element: <AboutUs />,
       },
     ],
   },
