@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { config } from "daisyui";
-
+import Swal from "sweetalert2";
 const ContactForm = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -27,11 +26,14 @@ const ContactForm = () => {
         config
       )
       .then(function (response) {
-        console.log(response);
+        Swal.fire("Done!", `${response.data.message}`, "success");
       })
       .catch(function (error) {
         console.log(error);
       });
+    setEmail("");
+    setLocation("");
+    setPhone("");
   };
 
   return (
