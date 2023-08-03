@@ -14,8 +14,12 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Pagination from "@mui/material/Pagination";
+
 export function Companies() {
   const [companiesData, setCompaniesData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const [isDeleted, setIsDeleted] = useState(true);
   useEffect(() => {
@@ -26,15 +30,21 @@ export function Companies() {
       },
     };
     axios
-      .get("http://localhost:3500/users/getAllCompanies", config)
+      .get(
+        `http://localhost:3500/users/getAllCompanies?page=${currentPage}`,
+        config
+      )
       .then((response) => {
-        const filteredData = response.data.filter((user) => !user.isDeleted);
+        const { companies, totalPages } = response.data;
+        setTotalPages(totalPages);
+
+        const filteredData = companies.filter((user) => !user.isDeleted);
         setCompaniesData(filteredData);
       })
       .catch((error) => {
         console.error("Error fetching users data:", error);
       });
-  }, [isDeleted]);
+  }, [currentPage, isDeleted]);
   const handleDelete = async (company_id) => {
     const confirmed = await showConfirmationPrompt();
     const token = localStorage.getItem("token");
@@ -60,7 +70,9 @@ export function Companies() {
       }
     }
   };
-
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
   const showConfirmationPrompt = () => {
     return new Promise((resolve) => {
       Swal.fire({
@@ -158,7 +170,15 @@ export function Companies() {
                 }
               )}
             </tbody>
-          </table>
+          </table>{" "}
+          <div className=" mt-20 flex justify-center">
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </div>
         </CardBody>
       </Card>
     </div>

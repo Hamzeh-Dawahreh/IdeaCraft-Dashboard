@@ -8,12 +8,14 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
 import Swal from "sweetalert2";
 
 export function Users() {
   const [usersData, setUsersData] = useState([]);
   const [isDeleted, setIsDeleted] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const handleDelete = async (user_id) => {
     const confirmed = await showConfirmationPrompt();
@@ -48,16 +50,27 @@ export function Users() {
         Authorization: `Bearer ${token}`,
       },
     };
+
+    // Fetch users based on the current page from the backend API
     axios
-      .get("http://localhost:3500/users/getAllUsers", config)
+      .get(
+        `http://localhost:3500/users/getAllUsers?page=${currentPage}`,
+        config
+      )
       .then((response) => {
-        const filteredData = response.data.filter((user) => !user.isDeleted);
+        const { users, totalPages } = response.data;
+        const filteredData = users.filter((user) => !user.isDeleted);
         setUsersData(filteredData);
+        setTotalPages(totalPages);
       })
       .catch((error) => {
         console.error("Error fetching users data:", error);
       });
-  }, [isDeleted]);
+  }, [currentPage, isDeleted]);
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
+
   const showConfirmationPrompt = () => {
     return new Promise((resolve) => {
       Swal.fire({
@@ -161,7 +174,15 @@ export function Users() {
                 }
               )}
             </tbody>
-          </table>
+          </table>{" "}
+          <div className=" mt-20 flex justify-center">
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </div>
         </CardBody>
       </Card>
     </div>

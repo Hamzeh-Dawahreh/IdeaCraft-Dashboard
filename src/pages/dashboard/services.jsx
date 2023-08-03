@@ -19,12 +19,15 @@ import {
 import Description from "./description";
 import Swal from "sweetalert2";
 import { data } from "autoprefixer";
+import Pagination from "@mui/material/Pagination";
 
 export function Services() {
   const [services, setServices] = useState([]);
   const [openArray, setOpenArray] = useState(
     new Array(services.length).fill(false)
   );
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const [isDeleted, setIsDeleted] = useState(true);
   const [isApproveD, setIsApproved] = useState(true);
@@ -136,10 +139,13 @@ export function Services() {
         };
 
         const response = await axios.get(
-          "http://localhost:3500/form/getAllServices",
+          `http://localhost:3500/form/getAllServices?page=${currentPage}`,
           config
         );
-        const filteredData = response.data.filter((user) => !user.isDeleted);
+        const { services, totalPages } = response.data;
+        setTotalPages(totalPages);
+
+        const filteredData = services.filter((user) => !user.isDeleted);
         setServices(filteredData);
       } catch (error) {
         console.log(error);
@@ -147,8 +153,10 @@ export function Services() {
     };
 
     fetchData();
-  }, [isDeleted, isApproveD]);
-  console.log(services);
+  }, [currentPage, isDeleted, isApproveD]);
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12 ">
       <Card>
@@ -309,7 +317,15 @@ export function Services() {
                 );
               })}
             </tbody>
-          </table>
+          </table>{" "}
+          <div className=" mt-20 flex justify-center">
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </div>
         </CardBody>
       </Card>
     </div>
