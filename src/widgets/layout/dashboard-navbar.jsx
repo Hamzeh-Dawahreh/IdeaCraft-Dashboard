@@ -87,13 +87,6 @@ export function DashboardNavbar() {
                 className="h-6 w-6 text-blue-gray-500"
               />
             </IconButton>{" "}
-            <IconButton
-              variant="text"
-              color="blue-gray"
-              onClick={() => setOpenConfigurator(dispatch, true)}
-            >
-              <Cog6ToothIcon className="h-5 w-5 text-blue-gray-500" />
-            </IconButton>
           </div>
         </div>
       </Navbar>

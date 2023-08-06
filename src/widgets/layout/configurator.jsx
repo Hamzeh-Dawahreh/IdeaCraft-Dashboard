@@ -146,19 +146,14 @@ export function Configurator() {
             />
           </div>
           <hr />
-         
+
           <a
             className="mx-auto flex items-center justify-center gap-2"
             href="https://github.com/creativetimofficial/material-tailwind-dashboard-react"
             target="_blank"
             rel="noreferrer"
-          >
-            
-         
-          </a>
+          ></a>
         </div>
-       
-        
       </div>
     </aside>
   );

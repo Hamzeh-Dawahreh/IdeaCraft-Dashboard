@@ -18,7 +18,7 @@ export function Home() {
   return (
     <>
       <div className="m-10 mx-auto grid max-w-screen-lg  gap-5 sm:grid-cols-3">
-        <div className="px-4 py-6 shadow-lg shadow-gray-300">
+        <div className=" bg-[#f5f5f5]  px-4 py-6 shadow-lg shadow-gray-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="bg-rose-400 h-14 w-14 rounded-xl bg-gray-600 p-4 text-white"
@@ -45,7 +45,7 @@ export function Home() {
           </button>
         </div>
 
-        <div className="px-4 py-6 shadow-lg shadow-gray-300">
+        <div className=" bg-[#f5f5f5]  px-4 py-6 shadow-lg shadow-gray-600">
           <svg
             fill="currentColor"
             className="h-14 w-14 rounded-xl bg-blue-400 p-4 text-white"
@@ -97,7 +97,7 @@ export function Home() {
           </button>
         </div>
 
-        <div className="px-4 py-6 shadow-lg shadow-gray-300">
+        <div className=" bg-[#f5f5f5]  px-4 py-6 shadow-lg shadow-gray-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-14 w-14 rounded-xl bg-green-400 p-4 text-white"
