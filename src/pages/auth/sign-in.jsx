@@ -29,12 +29,12 @@ export function SignIn() {
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard/home");
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
 
       Swal.fire({
         icon: "error",
         title: "We're sorry!",
-        text: error.response.data,
+        text: error.response.data.message || error.response.data,
       });
     }
   };
@@ -58,6 +58,7 @@ export function SignIn() {
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
             <Input
+              required
               type="email"
               label="Email"
               name="email"
@@ -65,6 +66,7 @@ export function SignIn() {
               onChange={handleChange}
             />
             <Input
+              required
               type="password"
               label="Password"
               size="lg"
