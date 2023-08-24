@@ -39,10 +39,12 @@ export function Home() {
               <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
             {statistics.users}
-          </p>
-          <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
-            <Link to={"/dashboard/Users"}>More info</Link>
-          </button>
+          </p>{" "}
+          <Link to={"/dashboard/Users"}>
+            <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
+              More info
+            </button>
+          </Link>
         </div>
 
         <div className=" bg-[#f5f5f5]  px-4 py-6 shadow-lg shadow-gray-600">
@@ -91,10 +93,12 @@ export function Home() {
               <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
             {statistics.companies}
-          </p>
-          <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
-            <Link to={"/dashboard/pitches"}>More info</Link>
-          </button>
+          </p>{" "}
+          <Link to={"/dashboard/companies"}>
+            <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
+              More info
+            </button>
+          </Link>
         </div>
 
         <div className=" bg-[#f5f5f5]  px-4 py-6 shadow-lg shadow-gray-600">
@@ -119,10 +123,12 @@ export function Home() {
               <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
             {statistics.services}
-          </p>
-          <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
-            <Link to={"/dashboard/booking"}>More info</Link>
-          </button>
+          </p>{" "}
+          <Link to={"/dashboard/services"}>
+            <button className="mt-6 h-10 w-28  rounded-lg bg-green-500 text-sm font-bold text-white shadow-lg hover:bg-green-700">
+              More info
+            </button>
+          </Link>
         </div>
       </div>
     </>
